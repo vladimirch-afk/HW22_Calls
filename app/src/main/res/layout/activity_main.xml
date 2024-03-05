@@ -29,7 +29,13 @@
         android:id="@+id/newContact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add contact" />
+        android:text="Добавить контакт" />
+
+    <Button
+        android:id="@+id/deleteContactB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Удалить контакт" />
 
 
 </LinearLayout>

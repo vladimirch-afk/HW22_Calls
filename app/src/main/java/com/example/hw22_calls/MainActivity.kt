@@ -10,15 +10,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener
+class MainActivity : AppCompatActivity()
 {
     companion object {
+        private val images = mutableListOf<Image>()
+        fun addContact(contact : Image) {
+            images.add(contact)
+        }
 
+        fun deleteContact(contact : String) {
+            images.removeIf { it.name == contact }
+        }
     }
     private val entries = 6
     private lateinit var phoneNum: MutableList<String>
     private lateinit var buttonLabels: MutableList<String>
-    private val images = mutableListOf<Image>()
+    private lateinit var adapter: CustomRecyclerAdapter
 
     fun populateArrays() {
         phoneNum.add("+7(930)839-31-89")
@@ -33,8 +40,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener
 //        buttonLabels[3] = "Кузнецова Катя"
 //        buttonLabels[4] = "Смирнова Саша"
 //        buttonLabels[5] = "Попова Полина"
-        images.add(Image("Чечуров Владимир", "+7(930)839-31-89"))
-        images.add(Image("Друг1", "+7(965)325-04-57"))
+        images.add(Image("Чечуров Владимир", "+7(930)839-31-89", "user"))
+        images.add(Image("Друг1", "+7(965)325-04-57", "friend"))
     }
 
 
@@ -48,22 +55,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener
         val layoutManager = LinearLayoutManager(this);
 
         val recyclerView = findViewById<RecyclerView>(R.id.review1)
-        val adapter = CustomRecyclerAdapter(this, images)
+        adapter = CustomRecyclerAdapter(this, images)
         recyclerView.layoutManager = layoutManager;
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
 
         val newContact = findViewById<Button>(R.id.newContact)
+        newContact.setOnClickListener {
+            loadNewContactActivity()
+        }
+
+        val delContact = findViewById<Button>(R.id.deleteContactB)
+        delContact.setOnClickListener {
+            deleteContact()
+        }
+
 
 
     }
 
-    override fun onClick(v: View?) {
-        when (v!!.id) {
-            R.id.button1 -> launchDialer(phoneNum[0])
-            R.id.button2 -> launchDialer(phoneNum[1])
-        }
+//    override fun onClick(v: View?) {
+//        when (v!!.id) {
+//            R.id.button1 -> launchDialer(phoneNum[0])
+//            R.id.button2 -> launchDialer(phoneNum[1])
+//        }
+//
+//    }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
     }
 
 
@@ -80,5 +101,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener
 
         startActivity(intent)
     }
+
+    fun loadNewContactActivity() {
+        val intent = Intent(this, AddContactActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun deleteContact() {
+        val intent = Intent(this, DeleteContactActivity::class.java)
+        startActivity(intent)
+    }
+
 }
 

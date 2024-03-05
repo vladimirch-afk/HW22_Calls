@@ -26,6 +26,7 @@ class CustomRecyclerAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val image = images[position]
         holder.name.text = image.name
+        holder.comment.text = image.comment
         holder.button1.setOnClickListener {
             (ctx as MainActivity).launchDialer(image.number)
         }
@@ -45,13 +46,15 @@ class CustomRecyclerAdapter (
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView
-        val button1: Button
-        val button2: Button
+        val comment: TextView
+        val button1: ImageView
+        val button2: ImageView
 
         init {
             name = view.findViewById(R.id.tvName)
-            button1 = view.findViewById(R.id.button1)
-            button2 = view.findViewById(R.id.button2)
+            comment = view.findViewById(R.id.commentView)
+            button1 = view.findViewById(R.id.phone)
+            button2 = view.findViewById(R.id.message)
         }
     }
 }

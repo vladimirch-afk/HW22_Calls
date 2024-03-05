@@ -6,11 +6,9 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.RECEIVE_SMS">
-    </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
-
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +21,12 @@
         android:theme="@style/Theme.HW22_Calls"
         tools:targetApi="31">
         <activity
+            android:name=".DeleteContactActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddContactActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -31,7 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="com.example.hw22_calls.IncomingSms"
+
+        <receiver
+            android:name=".IncomingSms"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
